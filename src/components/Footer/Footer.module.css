@@ -1,0 +1,154 @@
+.footer {
+  background-color: white;
+  border-top: 1px solid var(--border-light);
+  padding: 4.5rem 1.5rem 2.5rem;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.footerTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 3.5rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--border-light);
+  flex-wrap: wrap;
+}
+
+.brandCol {
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logoAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: var(--primary);
+  color: white;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.logoName {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.brandTagline {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+
+.linksRow {
+  display: flex;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.colTitle {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+
+.linksList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.footerLink {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+
+.footerLink:hover {
+  color: var(--primary);
+}
+
+.socialList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.socialItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+
+.socialItem:hover {
+  color: var(--primary);
+}
+
+/* Bottom Bar */
+.footerBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.copyright {
+  font-size: 0.82rem;
+  color: var(--text-light);
+}
+
+.backToTopBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  padding: 0.4rem 0.8rem;
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.backToTopBtn:hover {
+  background: white;
+  color: var(--primary);
+  border-color: #cbd5e1;
+}
+
+@media (max-width: 768px) {
+  .footerTop {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .linksRow {
+    gap: 2.5rem;
+  }
+}

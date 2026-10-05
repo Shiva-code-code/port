@@ -1,0 +1,332 @@
+.projectsSection {
+  padding: 6.5rem 1.5rem;
+  background-color: var(--bg-page);
+  position: relative;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.sectionHeader {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 3.5rem;
+}
+
+.sectionBadge {
+  display: inline-block;
+  padding: 0.35rem 0.95rem;
+  background: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}
+
+.sectionTitle {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.sectionSubtitle {
+  font-size: 1.05rem;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+
+/* Category Filters */
+.filtersWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  border-radius: 9999px;
+  background: white;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  transition: color 0.2s;
+  z-index: 1;
+}
+
+.filterBtn:hover {
+  color: var(--text-main);
+}
+
+.filterBtnActive {
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+.filterCount {
+  font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 0.1rem 0.4rem;
+  border-radius: 9999px;
+  background: #f1f5f9;
+  color: var(--text-dim);
+}
+
+.filterActiveBackground {
+  position: absolute;
+  inset: 0;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 9999px;
+  z-index: -1;
+}
+
+/* Projects Grid */
+.projectsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+}
+
+.projectCard {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.projectCard:hover {
+  border-color: #bfdbfe;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+
+.featuredCard {
+  border-color: #cbd5e1;
+  background: linear-gradient(to bottom, #ffffff, #fafafa);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.categoryBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  background: #f1f5f9;
+  color: var(--text-muted);
+}
+
+.featuredBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #b45309;
+}
+
+.cardPeriod {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+
+.projectTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+}
+
+.projectDesc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+/* Highlights */
+.highlightsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+}
+
+.highlightPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  color: #1e40af;
+}
+
+.highlightIcon {
+  color: #2563eb;
+}
+
+/* Tech Stack */
+.techStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.techTag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.25rem 0.55rem;
+  border-radius: 5px;
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  color: var(--text-dim);
+}
+
+/* Expandable Content */
+.expandedContent {
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.expandedHeading {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin-bottom: 0.85rem;
+}
+
+.pointsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  list-style: none;
+}
+
+.pointItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.pointBullet {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--primary);
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+/* Card Footer */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--primary);
+  transition: color 0.15s;
+}
+
+.toggleBtn:hover {
+  color: var(--primary-hover);
+}
+
+.footerLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.projectLinkBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s ease;
+}
+
+.projectLinkBtn:hover {
+  background: #f8fafc;
+  color: var(--text-main);
+  border-color: #cbd5e1;
+}
+
+@media (max-width: 900px) {
+  .projectsGrid {
+    grid-template-columns: 1fr;
+  }
+}
