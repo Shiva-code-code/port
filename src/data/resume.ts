@@ -65,8 +65,8 @@ export const resume: ResumeData = {
   github: "https://github.com/Shiva-code-code",
   linkedin: "https://www.linkedin.com/in/shivakumarhazari/",
   whatsapp: "https://wa.me/916300655864",
-  resumePdf: "/resume.pdf",
-  photo: "/shiva.jpeg",
+  resumePdf: `${import.meta.env.BASE_URL}resume.pdf`,
+  photo: `${import.meta.env.BASE_URL}shiva.jpeg`,
 
   summary:
     "Industrial IoT & Edge Systems Engineer with hands-on experience architecting and deploying end-to-end telemetry pipelines across Amazon GRE F logistics sites. Experienced in bridging physical instrumentation (RS-485 Modbus, LoRaWAN IN865, Pulse Meters) with enterprise cloud platforms (AWS IoT Core, X.509 mTLS). Proven track record of engineering full-stack Python automation tools that slashed gateway commissioning time by 95% (15 min → 4 min) while maintaining 99%+ data reliability. Google open-source contributor with a strong foundation in embedded C/C++, Linux edge gateways, and real-time SCADA HMI systems.",
