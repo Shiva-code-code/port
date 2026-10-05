@@ -330,3 +330,16 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 640px) {
+  .projectsSection {
+    padding: 4.5rem 1rem;
+  }
+  .projectCard {
+    padding: 1.5rem;
+  }
+  .cardFooter {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}
