@@ -235,6 +235,24 @@ export const resume: ResumeData = {
 
   projects: [
     {
+      id: "edge-modbus-daemon",
+      title: "Edge Modbus to AWS IoT Core Telemetry Daemon",
+      category: "Industrial IoT",
+      period: "2026",
+      featured: true,
+      githubUrl: "https://github.com/Shiva-code-code/edge-modbus-aws-daemon",
+      tech: ["Python (Asyncio)", "AWS IoT Core", "Modbus RTU/TCP", "SQLite (WAL Buffer)", "X.509 mTLS", "Docker", "Pytest"],
+      description: "Production-grade asynchronous edge daemon polling RS-485 Modbus meters and streaming to AWS IoT Core over mTLS (port 8883) with an offline SQLite WAL FIFO buffer guaranteeing zero telemetry loss during backhaul drops.",
+      highlights: ["Zero-loss SQLite WAL buffer", "Async Modbus poller", "AWS mTLS encryption", "Built-in virtual meter simulator"],
+      points: [
+        "Architected an asynchronous edge daemon using Python (Asyncio) and Pymodbus to poll multi-drop industrial energy meters over RS-485 serial RTU and Modbus TCP.",
+        "Engineered a thread-safe SQLite FIFO ring buffer with Write-Ahead Logging (WAL) that buffers telemetry during cellular/Wi-Fi blackouts and drains records upon reconnection.",
+        "Configured AWS IoT Core MQTT transport over mutual TLS (mTLS) with X.509 certificate chains, QoS 1 delivery, and automated reconnection backoff.",
+        "Created an embedded virtual Modbus power meter simulator generating realistic dynamic grid voltage and current fluctuations for hardware-free testing.",
+        "Packaged into multi-architecture Docker containers with complete Pytest unit test coverage and automated GitHub Actions CI.",
+      ],
+    },
+    {
       id: "nexus-core",
       title: "Nexus Core: Industrial IoT Edge-to-Cloud Platform",
       category: "Industrial IoT",
