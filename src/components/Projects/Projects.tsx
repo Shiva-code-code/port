@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ChevronUp, CheckCircle } from 'lucide-react';
+import { ChevronDown, CheckCircle } from 'lucide-react';
 import { resume } from '../../data/resume';
 import type { Project } from '../../data/resume';
 import { GithubIcon } from '../Icons';
@@ -72,7 +72,8 @@ export default function Projects() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.4, delay: idx * 0.06 }}
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.4, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
                   className={`${styles.projectCard} ${project.featured ? styles.featuredCard : ''}`}
                 >
                   {/* Card Header Bar */}
@@ -93,19 +94,29 @@ export default function Projects() {
                   {/* Highlights Bar */}
                   <div className={styles.highlightsContainer}>
                     {project.highlights.map((hl, i) => (
-                      <span key={i} className={styles.highlightPill}>
+                      <motion.span 
+                        key={i} 
+                        className={styles.highlightPill}
+                        whileHover={{ scale: 1.04, y: -1 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                      >
                         <CheckCircle size={11} className={styles.highlightIcon} />
                         {hl}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
 
                   {/* Technology Chips */}
                   <div className={styles.techStack}>
                     {project.tech.map((t, i) => (
-                      <span key={i} className={styles.techTag}>
+                      <motion.span 
+                        key={i} 
+                        className={styles.techTag}
+                        whileHover={{ scale: 1.05, y: -1 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                      >
                         {t}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
 
@@ -117,7 +128,7 @@ export default function Projects() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                       >
                         <h4 className={styles.expandedHeading}>Architectural Contributions:</h4>
                         <ul className={styles.pointsList}>
@@ -139,21 +150,30 @@ export default function Projects() {
                       onClick={() => toggleExpand(project.id)}
                     >
                       <span>{isExpanded ? 'Less Details' : 'Deep Dive Architecture'}</span>
-                      {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                      <motion.span
+                        animate={{ rotate: isExpanded ? 180 : 0 }}
+                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                        style={{ display: 'inline-flex' }}
+                      >
+                        <ChevronDown size={14} />
+                      </motion.span>
                     </button>
 
                     <div className={styles.footerLinks}>
-                      <a
+                      <motion.a
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.projectLinkBtn}
                         aria-label="View on GitHub"
                         title="View repository on GitHub"
+                        whileHover={{ scale: 1.04, y: -1 }}
+                        whileTap={{ scale: 0.97 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                       >
                         <GithubIcon size={16} />
                         <span>GitHub</span>
-                      </a>
+                      </motion.a>
                     </div>
                   </div>
                 </motion.div>

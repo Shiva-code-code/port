@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Activity, ShieldCheck, Cpu, Wifi, RefreshCw, Zap } from 'lucide-react';
 import styles from './TelemetryWidget.module.css';
 
@@ -9,39 +10,73 @@ export default function TelemetryWidget() {
   const [packetCount, setPacketCount] = useState(14890);
   const [isSimulatingAnomaly, setIsSimulatingAnomaly] = useState(false);
   const [connectedTime, setConnectedTime] = useState(0);
+  const [powerHistory, setPowerHistory] = useState<number[]>([2.38, 2.40, 2.39, 2.42, 2.41, 2.40, 2.43, 2.41, 2.42, 2.41]);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setConnectedTime((prev) => prev + 1);
 
+      let nextPower = power;
       if (!isSimulatingAnomaly) {
-        setPower((prev) => +(prev + (Math.random() * 0.1 - 0.05)).toFixed(2));
+        nextPower = +(2.35 + Math.random() * 0.15).toFixed(2);
         setVoltage(+(230 + (Math.random() * 2.5 - 1.25)).toFixed(1));
         setPressure(+(4.8 + (Math.random() * 0.12 - 0.06)).toFixed(2));
       } else {
-        setPower((prev) => +(prev + (Math.random() * 0.3 + 0.1)).toFixed(2));
+        nextPower = +(3.8 + Math.random() * 1.2).toFixed(2);
         setPressure(+(6.4 + (Math.random() * 0.4)).toFixed(2));
       }
 
+      setPower(nextPower);
+      setPowerHistory((prev) => [...prev.slice(-12), nextPower]);
       setPacketCount((prev) => prev + 1);
     }, 1800);
 
     return () => clearInterval(timer);
-  }, [isSimulatingAnomaly]);
+  }, [isSimulatingAnomaly, power]);
 
   const toggleAnomaly = () => {
     if (isSimulatingAnomaly) {
       setIsSimulatingAnomaly(false);
       setPower(2.41);
       setPressure(4.85);
+      setPowerHistory([2.38, 2.40, 2.39, 2.42, 2.41, 2.40, 2.43, 2.41, 2.42, 2.41]);
     } else {
       setIsSimulatingAnomaly(true);
     }
   };
 
+  // Generate SVG Sparkline coordinates
+  const svgWidth = 500;
+  const svgHeight = 44;
+  const minVal = 2.0;
+  const maxVal = isSimulatingAnomaly ? 5.5 : 3.0;
+
+  const points = powerHistory.map((val, idx) => {
+    const x = (idx / (powerHistory.length - 1)) * svgWidth;
+    const clamped = Math.max(minVal, Math.min(maxVal, val));
+    const y = svgHeight - ((clamped - minVal) / (maxVal - minVal)) * (svgHeight - 12) - 6;
+    return { x, y };
+  });
+
+  const pathD = points.reduce((acc, pt, idx, arr) => {
+    if (idx === 0) return `M ${pt.x} ${pt.y}`;
+    const prev = arr[idx - 1];
+    const cx = (prev.x + pt.x) / 2;
+    return `${acc} C ${cx} ${prev.y}, ${cx} ${pt.y}, ${pt.x} ${pt.y}`;
+  }, '');
+
+  const areaD = `${pathD} L ${points[points.length - 1]?.x || svgWidth} ${svgHeight} L 0 ${svgHeight} Z`;
+  const lastPoint = points[points.length - 1] || { x: svgWidth, y: svgHeight / 2 };
+
   return (
     <div className={styles.widgetWrapper}>
-      <div className={styles.widgetCard}>
+      <motion.div 
+        className={styles.widgetCard}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      >
         {/* Header bar */}
         <div className={styles.headerBar}>
           <div className={styles.nodeIdentity}>
@@ -62,6 +97,37 @@ export default function TelemetryWidget() {
               <span>AWS IoT Core</span>
             </div>
           </div>
+        </div>
+
+        {/* Real-Time Telemetry Sparkline Stream */}
+        <div className={`${styles.streamChartWrapper} ${isSimulatingAnomaly ? styles.streamChartWrapperAnomaly : ''}`}>
+          <div className={styles.streamChartHeader}>
+            <div className={styles.streamLiveIndicator}>
+              <span className={`${styles.streamPingDot} ${isSimulatingAnomaly ? styles.streamPingDotAlert : ''}`} />
+              <span>{isSimulatingAnomaly ? 'ANOMALOUS TELEMETRY SURGE' : 'RS-485 TELEMETRY STREAM (REAL-TIME)'}</span>
+            </div>
+            <span className={styles.streamFps}>MQTT QoS 1 &bull; {packetCount.toLocaleString()} pkts</span>
+          </div>
+
+          <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className={styles.sparklineSvg} preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="streamGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={isSimulatingAnomaly ? '#ef4444' : 'var(--primary)'} stopOpacity="0.35" />
+                <stop offset="100%" stopColor={isSimulatingAnomaly ? '#ef4444' : 'var(--primary)'} stopOpacity="0.0" />
+              </linearGradient>
+            </defs>
+            <path d={areaD} fill="url(#streamGradient)" />
+            <path 
+              d={pathD} 
+              fill="none" 
+              stroke={isSimulatingAnomaly ? '#ef4444' : 'var(--primary)'} 
+              strokeWidth="2.5" 
+              strokeLinecap="round"
+            />
+            {/* Live pulsating dot at latest point */}
+            <circle cx={lastPoint.x} cy={lastPoint.y} r="4" fill={isSimulatingAnomaly ? '#ef4444' : 'var(--primary)'} />
+            <circle cx={lastPoint.x} cy={lastPoint.y} r="8" fill={isSimulatingAnomaly ? '#ef4444' : 'var(--primary)'} opacity="0.3" />
+          </svg>
         </div>
 
         {/* Telemetry Metrics Grid */}
@@ -135,7 +201,7 @@ export default function TelemetryWidget() {
             <span>{isSimulatingAnomaly ? 'Reset Baseline' : 'Inject Anomaly'}</span>
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

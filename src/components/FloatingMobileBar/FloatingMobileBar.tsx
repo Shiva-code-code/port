@@ -116,7 +116,9 @@ export default function FloatingMobileBar() {
               key={tab.id}
               onClick={() => scrollTo(tab.id)}
               className={`${styles.tabBtn} ${isActive ? styles.activeTab : ''}`}
+              whileHover={{ y: -2 }}
               whileTap={{ scale: 0.92 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 20 }}
               aria-label={tab.label}
               type="button"
             >
@@ -142,17 +144,20 @@ export default function FloatingMobileBar() {
         <ThemeToggle className={styles.dockThemeBtn} size={15} />
 
         {/* Desktop-only quick Resume download button */}
-        <a
+        <motion.a
           href={resume.resumePdf}
           target="_blank"
           rel="noopener noreferrer"
           className={styles.dockResumeBtn}
           download="SHIVA_KUMAR_HAZARI_RESUME.pdf"
           title="Download Resume (PDF)"
+          whileHover={{ scale: 1.04, y: -1 }}
+          whileTap={{ scale: 0.96 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
         >
           <Download size={14} />
           <span>Resume</span>
-        </a>
+        </motion.a>
       </motion.nav>
     </div>
   );

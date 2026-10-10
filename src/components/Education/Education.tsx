@@ -25,8 +25,8 @@ export default function Education() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              whileHover={{ y: -4 }}
+              transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -6 }}
             >
               <div className={styles.cardTop}>
                 <span className={styles.eduIcon}>{edu.icon}</span>
@@ -52,9 +52,14 @@ export default function Education() {
                   <span className={styles.courseworkLabel}>Key Disciplines:</span>
                   <div className={styles.courseworkChips}>
                     {edu.coursework.map((course, cIdx) => (
-                      <span key={cIdx} className={styles.courseChip}>
+                      <motion.span 
+                        key={cIdx} 
+                        className={styles.courseChip}
+                        whileHover={{ scale: 1.05, y: -1 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                      >
                         {course}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                 </div>

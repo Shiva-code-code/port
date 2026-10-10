@@ -120,11 +120,17 @@ export default function About() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: idx * 0.12 }}
-                whileHover={{ y: -4 }}
+                transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -5, scale: 1.01 }}
               >
                 <div className={styles.pillarHeader}>
-                  <div className={styles.pillarIconWrapper}>{pillar.icon}</div>
+                  <motion.div 
+                    className={styles.pillarIconWrapper}
+                    whileHover={{ scale: 1.12, rotate: 6 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  >
+                    {pillar.icon}
+                  </motion.div>
                   <div>
                     <h4 className={styles.pillarTitle}>{pillar.title}</h4>
                     <span className={styles.pillarSubtitle}>{pillar.subtitle}</span>
@@ -140,7 +146,8 @@ export default function About() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.36 }}
+              whileHover={{ y: -5, scale: 1.01 }}
+              transition={{ duration: 0.5, delay: 0.36, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className={styles.spotlightTop}>
                 <span className={styles.spotlightTag}>Google Open Source</span>

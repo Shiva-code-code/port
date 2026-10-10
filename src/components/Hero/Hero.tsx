@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowDown, Download, Check, Copy, Sparkles, MapPin, Radio, ShieldCheck } from 'lucide-react';
 import { resume } from '../../data/resume';
 import { GithubIcon, LinkedinIcon, WhatsAppIcon, GoogleIcon } from '../Icons';
+import AnimatedCounter from '../common/AnimatedCounter';
 import styles from './Hero.module.css';
 
 const dynamicTitles = [
@@ -183,21 +184,33 @@ export default function Hero() {
               <div className={styles.photoGlow} />
 
               {/* Glossy Photo Frame */}
-              <div className={styles.photoCard}>
+              <motion.div 
+                className={styles.photoCard}
+                whileHover={{ scale: 1.025 }}
+                transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+              >
                 <img
                   src={resume.photo}
                   alt={resume.name}
                   className={styles.photoImg}
                 />
-              </div>
+              </motion.div>
 
               {/* Floating Badge 1: Google Contributor */}
               <motion.div
                 className={`${styles.floatingBadge} ${styles.badgeTopRight}`}
                 initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                whileHover={{ y: -3 }}
+                animate={{ 
+                  opacity: 1, 
+                  x: 0,
+                  y: [0, -8, 0],
+                }}
+                transition={{ 
+                  opacity: { duration: 0.6, delay: 0.4 },
+                  x: { duration: 0.6, delay: 0.4 },
+                  y: { repeat: Infinity, duration: 4.8, ease: "easeInOut", delay: 0.6 }
+                }}
+                whileHover={{ scale: 1.05, y: -6 }}
               >
                 <div className={styles.badgeIcon}>
                   <GoogleIcon size={18} />
@@ -212,9 +225,17 @@ export default function Hero() {
               <motion.div
                 className={`${styles.floatingBadge} ${styles.badgeBottomLeft}`}
                 initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.55 }}
-                whileHover={{ y: -3 }}
+                animate={{ 
+                  opacity: 1, 
+                  x: 0,
+                  y: [0, 8, 0],
+                }}
+                transition={{ 
+                  opacity: { duration: 0.6, delay: 0.55 },
+                  x: { duration: 0.6, delay: 0.55 },
+                  y: { repeat: Infinity, duration: 5.4, ease: "easeInOut", delay: 0.8 }
+                }}
+                whileHover={{ scale: 1.05, y: -6 }}
               >
                 <div className={`${styles.badgeIcon} ${styles.iotIconBadge}`}>
                   <Sparkles size={16} />
@@ -236,11 +257,18 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.35 }}
         >
           {resume.metrics.map((metric, idx) => (
-            <div key={idx} className={styles.metricCard}>
-              <div className={styles.metricValue}>{metric.value}</div>
+            <motion.div 
+              key={idx} 
+              className={styles.metricCard}
+              whileHover={{ y: -5, scale: 1.015 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+            >
+              <div className={styles.metricValue}>
+                <AnimatedCounter value={metric.value} />
+              </div>
               <div className={styles.metricLabel}>{metric.label}</div>
               <div className={styles.metricSub}>{metric.sublabel}</div>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
       </div>

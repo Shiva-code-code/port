@@ -64,7 +64,8 @@ export default function Certificates() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.35, delay: idx * 0.04 }}
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.35, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
                 className={styles.certCard}
               >
                 <div className={styles.cardTop}>
@@ -72,9 +73,9 @@ export default function Certificates() {
                     <span
                       className={styles.issuerTag}
                       style={{
-                        background: cert.issuer === 'HackerRank' ? '#f0fdf4' : '#eff6ff',
-                        color: cert.issuer === 'HackerRank' ? '#166534' : '#1e40af',
-                        borderColor: cert.issuer === 'HackerRank' ? '#bbf7d0' : '#bfdbfe',
+                        background: cert.issuer === 'HackerRank' ? 'var(--emerald-light)' : 'var(--primary-light)',
+                        color: cert.issuer === 'HackerRank' ? 'var(--emerald)' : 'var(--primary)',
+                        borderColor: cert.issuer === 'HackerRank' ? 'var(--emerald-border)' : 'var(--primary-border)',
                       }}
                     >
                       {cert.badge}
@@ -94,15 +95,18 @@ export default function Certificates() {
                   </div>
 
                   {cert.credentialUrl && (
-                    <a
+                    <motion.a
                       href={cert.credentialUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={styles.verifyLink}
+                      whileHover={{ scale: 1.05, y: -1 }}
+                      whileTap={{ scale: 0.96 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                     >
                       <span>Verify</span>
                       <ExternalLink size={12} />
-                    </a>
+                    </motion.a>
                   )}
                 </div>
               </motion.div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Copy, Check, Download, Send, Loader2, CheckCircle2, AlertCircle, ExternalLink } from 'lucide-react';
 import { resume } from '../../data/resume';
 import { GithubIcon, LinkedinIcon, WhatsAppIcon } from '../Icons';
@@ -89,7 +90,13 @@ export default function Contact() {
         </div>
 
         {/* 2-Column Contact Card */}
-        <div className={styles.contactCardWrapper}>
+        <motion.div 
+          className={styles.contactCardWrapper}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        >
           <div className={styles.contactGrid}>
             {/* Left: Contact Info & Status */}
             <div className={styles.infoColumn}>
@@ -290,10 +297,13 @@ export default function Contact() {
                     />
                   </div>
 
-                  <button
+                  <motion.button
                     type="submit"
                     className={`${styles.submitBtn} ${status === 'sending' ? styles.submitBtnSending : ''}`}
                     disabled={status === 'sending'}
+                    whileHover={{ scale: 1.015 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   >
                     {status === 'sending' ? (
                       <>
@@ -306,7 +316,7 @@ export default function Contact() {
                         <Send size={15} />
                       </>
                     )}
-                  </button>
+                  </motion.button>
 
                   <div className={styles.quickOptions}>
                     <span className={styles.quickOptionsLabel}>Prefer another app?</span>
@@ -335,7 +345,7 @@ export default function Contact() {
               )}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

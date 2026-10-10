@@ -99,10 +99,13 @@ export default function Skills() {
               {resume.skills.map((cat, idx) => {
                 const isActive = selectedCategoryIndex === idx;
                 return (
-                  <button
+                  <motion.button
                     key={idx}
                     className={`${styles.categoryTabBtn} ${isActive ? styles.categoryTabBtnActive : ''}`}
                     onClick={() => setSelectedCategoryIndex(idx)}
+                    whileHover={{ x: 4 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   >
                     <span className={styles.tabIcon}>{cat.icon}</span>
                     <div className={styles.tabInfo}>
@@ -116,7 +119,7 @@ export default function Skills() {
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -148,7 +151,7 @@ export default function Skills() {
                         initial={{ opacity: 0, scale: 0.92 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: itemIdx * 0.035 }}
-                        whileHover={{ y: -2 }}
+                        whileHover={{ y: -3, scale: 1.04 }}
                       >
                         <span className={styles.chipBullet} />
                         <span className={styles.chipLabel}>{item}</span>

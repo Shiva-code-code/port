@@ -25,11 +25,17 @@ export default function Achievements() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.45, delay: idx * 0.08 }}
-              whileHover={{ y: -4 }}
+              whileHover={{ y: -6, scale: 1.01 }}
+              transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className={styles.cardHeader}>
-                <div className={styles.iconCircle}>{ach.icon}</div>
+                <motion.div 
+                  className={styles.iconCircle}
+                  whileHover={{ scale: 1.12, rotate: 6 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                >
+                  {ach.icon}
+                </motion.div>
                 <span className={styles.tagBadge}>{ach.tag}</span>
               </div>
 

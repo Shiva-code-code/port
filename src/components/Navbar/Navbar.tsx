@@ -119,27 +119,33 @@ export default function Navbar() {
 
         {/* Right CTA / Theme / Resume */}
         <div className={styles.navActions}>
-          <a
+          <motion.a
             href={resume.resumePdf}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.resumeBtn}
             download="SHIVA_KUMAR_HAZARI_RESUME.pdf"
+            whileHover={{ y: -1, scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
           >
             <Download size={14} />
             <span>Resume</span>
-          </a>
+          </motion.a>
 
           {/* Theme Switcher Toggle */}
           <ThemeToggle />
 
-          <button
+          <motion.button
             className={styles.contactBtn}
             onClick={() => scrollTo('contact')}
+            whileHover={{ y: -1, scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
           >
             <span>Let&apos;s Talk</span>
             <ArrowUpRight size={14} />
-          </button>
+          </motion.button>
 
           {/* Mobile Menu Trigger */}
           <button

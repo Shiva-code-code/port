@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, MapPin, ChevronDown, ChevronUp, CheckCircle2 } from 'lucide-react';
+import { Calendar, MapPin, ChevronDown, CheckCircle2 } from 'lucide-react';
 import { resume } from '../../data/resume';
 import { GoogleIcon } from '../Icons';
 import styles from './Experience.module.css';
@@ -35,7 +35,8 @@ export default function Experience() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
               >
                 {/* Top Info Bar */}
                 <div className={styles.cardTopBar}>
@@ -74,9 +75,14 @@ export default function Experience() {
                 {/* Skills Cloud */}
                 <div className={styles.skillsCloud}>
                   {exp.skillsUsed.map((skill, sIdx) => (
-                    <span key={sIdx} className={styles.skillPill}>
+                    <motion.span 
+                      key={sIdx} 
+                      className={styles.skillPill}
+                      whileHover={{ scale: 1.05, y: -1 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                    >
                       {skill}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
 
@@ -88,7 +94,7 @@ export default function Experience() {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                     >
                       <h4 className={styles.bulletsHeading}>Core Deliverables &amp; Achievements:</h4>
                       <ul className={styles.bulletsList}>
@@ -110,7 +116,13 @@ export default function Experience() {
                     onClick={() => toggleExpand(idx)}
                   >
                     <span>{isExpanded ? 'Hide Deliverables' : 'View Full Deliverables & Outcomes'}</span>
-                    {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                    <motion.span
+                      animate={{ rotate: isExpanded ? 180 : 0 }}
+                      transition={{ duration: 0.25, ease: 'easeInOut' }}
+                      style={{ display: 'inline-flex' }}
+                    >
+                      <ChevronDown size={14} />
+                    </motion.span>
                   </button>
                 </div>
               </motion.div>
