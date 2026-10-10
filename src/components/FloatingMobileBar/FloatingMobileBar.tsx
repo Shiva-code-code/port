@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Home, User, Briefcase, Cpu, MessageSquare } from 'lucide-react';
+import { Home, User, Briefcase, Cpu, MessageSquare, Download } from 'lucide-react';
+import { resume } from '../../data/resume';
 import styles from './FloatingMobileBar.module.css';
 
 interface NavItem {
@@ -19,16 +20,42 @@ const navTabs: NavItem[] = [
 
 export default function FloatingMobileBar() {
   const [activeTab, setActiveTab] = useState('hero');
+  const [scrolled, setScrolled] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPos = window.scrollY + 200;
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth > 768);
+    };
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
 
-      for (let i = navTabs.length - 1; i >= 0; i--) {
-        const sectionId = navTabs[i].id;
-        const el = document.getElementById(sectionId);
+    const handleScroll = () => {
+      // Threshold for desktop scroll behavior: 80px
+      const isPastTop = window.scrollY > 80;
+      setScrolled(isPastTop);
+
+      // Section spy mapping
+      const scrollPos = window.scrollY + 200;
+      const sectionOrder = ['hero', 'about', 'projects', 'experience', 'skills', 'certificates', 'achievements', 'education', 'contact'];
+      
+      const tabMap: Record<string, string> = {
+        hero: 'hero',
+        about: 'about',
+        projects: 'projects',
+        experience: 'projects',
+        skills: 'skills',
+        certificates: 'skills',
+        achievements: 'about',
+        education: 'about',
+        contact: 'contact',
+      };
+
+      for (let i = sectionOrder.length - 1; i >= 0; i--) {
+        const id = sectionOrder[i];
+        const el = document.getElementById(id);
         if (el && el.offsetTop <= scrollPos) {
-          setActiveTab(sectionId);
+          setActiveTab(tabMap[id] || 'hero');
           break;
         }
       }
@@ -36,20 +63,49 @@ export default function FloatingMobileBar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('resize', checkDesktop);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const scrollTo = (id: string) => {
     setActiveTab(id);
+    if (id === 'hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
+  // On desktop screen: appears when scrolling down, disappears when at the complete top (scrollY <= 80px)
+  // On mobile screen: remains visible as the floating bottom bar
+  const isVisible = !isDesktop || scrolled;
+
   return (
     <div className={styles.barContainer}>
-      <nav className={styles.floatingBar} aria-label="Mobile Bottom Navigation">
+      <motion.nav
+        className={styles.floatingBar}
+        aria-label="Floating Navigation Bar"
+        initial={false}
+        animate={{
+          y: isVisible ? 0 : 90,
+          opacity: isVisible ? 1 : 0,
+          scale: isVisible ? 1 : 0.94,
+        }}
+        transition={{
+          type: 'spring',
+          stiffness: 360,
+          damping: 30,
+        }}
+        style={{
+          pointerEvents: isVisible ? 'auto' : 'none',
+        }}
+      >
         {navTabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -59,27 +115,41 @@ export default function FloatingMobileBar() {
               key={tab.id}
               onClick={() => scrollTo(tab.id)}
               className={`${styles.tabBtn} ${isActive ? styles.activeTab : ''}`}
-              whileTap={{ scale: 0.88 }}
+              whileTap={{ scale: 0.92 }}
               aria-label={tab.label}
               type="button"
             >
               {isActive && (
                 <motion.div
-                  layoutId="mobileActivePill"
+                  layoutId="dockActivePill"
                   className={styles.activePill}
                   transition={{ type: 'spring', stiffness: 450, damping: 32 }}
                 />
               )}
 
               <div className={styles.iconWrapper}>
-                <Icon size={20} className={styles.tabIcon} />
+                <Icon size={19} className={styles.tabIcon} />
                 {isActive && <span className={styles.activeDot} />}
               </div>
               <span className={styles.tabLabel}>{tab.label}</span>
             </motion.button>
           );
         })}
-      </nav>
+
+        {/* Desktop-only quick Resume download button */}
+        <div className={styles.desktopDivider} />
+        <a
+          href={resume.resumePdf}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.dockResumeBtn}
+          download="SHIVA_KUMAR_HAZARI_RESUME.pdf"
+          title="Download Resume (PDF)"
+        >
+          <Download size={14} />
+          <span>Resume</span>
+        </a>
+      </motion.nav>
     </div>
   );
 }

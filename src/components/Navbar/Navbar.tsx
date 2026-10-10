@@ -21,7 +21,14 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 24);
+      // When scrolling down past 80px, the top navbar disappears smoothly
+      // When scrolling to the complete top (scrollY <= 80px), the top navbar reappears
+      const isPastTop = window.scrollY > 80;
+      setScrolled(isPastTop);
+
+      if (isPastTop && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
 
       // Section spy
       const sections = ['hero', ...navItems.map(item => item.id)];
@@ -37,11 +44,16 @@ export default function Navbar() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [mobileMenuOpen]);
 
   const scrollTo = (id: string) => {
     setMobileMenuOpen(false);
+    if (id === 'hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
@@ -49,7 +61,21 @@ export default function Navbar() {
   };
 
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
+    <motion.header
+      className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}
+      initial={{ y: 0, opacity: 1 }}
+      animate={{
+        y: scrolled ? -100 : 0,
+        opacity: scrolled ? 0 : 1,
+      }}
+      transition={{
+        duration: 0.35,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      style={{
+        pointerEvents: scrolled ? 'none' : 'auto',
+      }}
+    >
       <div className={styles.container}>
         {/* Brand / Logo */}
         <button className={styles.logoBtn} onClick={() => scrollTo('hero')}>
@@ -158,6 +184,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }
