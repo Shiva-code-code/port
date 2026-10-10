@@ -182,7 +182,7 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.25rem 0.6rem;
-  background: #f1f5f9;
+  background: var(--bg-subtle);
   border: 1px solid var(--border-light);
   border-radius: 4px;
   font-size: 0.72rem;
@@ -397,8 +397,8 @@
   align-items: center;
   text-align: center;
   padding: 2.75rem 1.5rem;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
+  background: var(--emerald-light);
+  border: 1px solid var(--emerald-border);
   border-radius: var(--radius-lg);
   box-shadow: 0 4px 16px rgba(16, 185, 129, 0.08);
 }
@@ -407,8 +407,8 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: white;
-  border: 2px solid #a7f3d0;
+  background: var(--bg-card-solid);
+  border: 2px solid var(--emerald-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -416,19 +416,19 @@
 }
 
 .successIcon {
-  color: #059669;
+  color: var(--emerald);
 }
 
 .successStateTitle {
   font-size: 1.25rem;
   font-weight: 800;
-  color: #065f46;
+  color: var(--emerald);
   margin-bottom: 0.5rem;
 }
 
 .successStateDesc {
   font-size: 0.88rem;
-  color: #047857;
+  color: var(--text-muted);
   line-height: 1.6;
   max-width: 380px;
   margin-bottom: 1.5rem;
@@ -438,7 +438,7 @@
   display: inline-flex;
   align-items: center;
   padding: 0.65rem 1.4rem;
-  background: #059669;
+  background: var(--emerald);
   color: white;
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
@@ -447,7 +447,7 @@
 }
 
 .resetFormBtn:hover {
-  background: #047857;
+  opacity: 0.9;
   transform: translateY(-1px);
 }
 
@@ -456,16 +456,16 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.85rem 1rem;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: var(--radius-sm);
   font-size: 0.82rem;
-  color: #b91c1c;
+  color: #ef4444;
   line-height: 1.45;
 }
 
 .errorIcon {
-  color: #dc2626;
+  color: #ef4444;
   flex-shrink: 0;
 }
 

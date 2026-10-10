@@ -27,9 +27,13 @@
   
   --amber: #d97706;
   --amber-light: #fffbeb;
+  --amber-border: #fde68a;
   
   --indigo: #4f46e5;
   --indigo-light: #eef2ff;
+  --indigo-border: #c7d2fe;
+
+  --gradient-name: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #4f46e5 100%);
 
   --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
   --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
@@ -80,9 +84,13 @@
   
   --amber: #f59e0b;
   --amber-light: rgba(245, 158, 11, 0.16);
+  --amber-border: rgba(245, 158, 11, 0.32);
   
-  --indigo: #6366f1;
+  --indigo: #818cf8;
   --indigo-light: rgba(99, 102, 241, 0.16);
+  --indigo-border: rgba(129, 140, 248, 0.32);
+
+  --gradient-name: linear-gradient(135deg, #60a5fa 0%, #93c5fd 50%, #818cf8 100%);
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.25);

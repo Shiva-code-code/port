@@ -181,19 +181,20 @@
   gap: 0.35rem;
   padding: 0.48rem 1rem;
   border-radius: var(--radius-sm);
-  background: var(--text-main);
-  border: 1px solid var(--text-main);
+  background: var(--primary);
+  border: 1px solid var(--primary);
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--bg-card-solid);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
   transition: all 0.2s ease;
 }
 
 .contactBtn:hover {
-  opacity: 0.9;
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
 }
 
 .menuTrigger {

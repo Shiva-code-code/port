@@ -102,7 +102,7 @@
 .milvianInitial {
   font-size: 1.25rem;
   font-weight: 800;
-  color: #2563eb;
+  color: var(--primary);
 }
 
 .companyNameRow {
@@ -125,9 +125,9 @@
   letter-spacing: 0.04em;
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
-  background: #eff6ff;
-  color: #1d4ed8;
-  border: 1px solid #dbeafe;
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid var(--primary-border);
 }
 
 .roleTitle {
