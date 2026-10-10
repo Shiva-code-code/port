@@ -5,16 +5,18 @@
 }
 
 .widgetCard {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(226, 232, 240, 0.95);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
   box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 8px 30px -4px rgba(15, 23, 42, 0.05);
-  backdrop-filter: blur(12px);
+    inset 0 1px 0 var(--specular-line),
+    var(--shadow-md);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   position: relative;
   overflow: hidden;
+  transition: background 0.25s, border-color 0.25s;
 }
 
 .headerBar {
@@ -78,19 +80,19 @@
 }
 
 .securePill {
-  background: #f0fdf4;
-  border-color: #bbf7d0;
-  color: #166534;
+  background: var(--emerald-light);
+  border-color: var(--emerald-border);
+  color: var(--emerald);
 }
 
 .brokerPill {
-  background: #eff6ff;
-  border-color: #bfdbfe;
-  color: #1d4ed8;
+  background: var(--primary-light);
+  border-color: var(--primary-border);
+  color: var(--primary);
 }
 
 .shieldIcon {
-  color: #16a34a;
+  color: var(--emerald);
 }
 
 /* Metrics Grid */
@@ -102,7 +104,7 @@
 }
 
 .metricItem {
-  background: #f8fafc;
+  background: var(--bg-subtle);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
   padding: 1.25rem;
@@ -113,8 +115,8 @@
 }
 
 .metricItem:hover {
-  background: white;
-  border-color: #bfdbfe;
+  background: var(--bg-card-solid);
+  border-color: var(--primary-border);
   box-shadow: var(--shadow-sm);
 }
 
@@ -207,7 +209,7 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.85rem;
-  background: white;
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
   font-size: 0.76rem;
@@ -218,15 +220,15 @@
 }
 
 .simBtn:hover {
-  background: #f1f5f9;
+  background: var(--bg-subtle);
   color: var(--primary);
-  border-color: #cbd5e1;
+  border-color: var(--primary-border);
 }
 
 .simBtnActive {
-  background: #fffbeb;
-  border-color: #fde68a;
-  color: #b45309;
+  background: var(--amber-light);
+  border-color: var(--amber);
+  color: var(--amber);
 }
 
 .spinning {

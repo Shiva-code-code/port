@@ -40,6 +40,65 @@
   --radius-md: 14px;
   --radius-lg: 20px;
   --radius-xl: 28px;
+
+  /* Glass navigation variables */
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --nav-border: rgba(226, 232, 240, 0.85);
+  --dock-bg: rgba(255, 255, 255, 0.82);
+  --dock-border: rgba(255, 255, 255, 0.95);
+  --dock-active-bg: rgba(239, 246, 255, 0.92);
+  --dock-active-border: rgba(191, 219, 254, 0.9);
+  --specular-line: rgba(255, 255, 255, 1);
+  --dock-tab-color: #64748b;
+  --dock-tab-hover: #0f172a;
+}
+
+[data-theme="dark"] {
+  --bg-page: #090d16;
+  --bg-card: rgba(15, 23, 42, 0.85);
+  --bg-card-solid: #0f172a;
+  --bg-subtle: #1e293b;
+  --bg-hover: #1e293b;
+  
+  --border-light: rgba(51, 65, 85, 0.65);
+  --border-focus: #60a5fa;
+  --border-gloss: rgba(255, 255, 255, 0.08);
+  
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --text-dim: #94a3b8;
+  --text-light: #64748b;
+  
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --primary-light: rgba(59, 130, 246, 0.16);
+  --primary-border: rgba(96, 165, 250, 0.32);
+  
+  --emerald: #10b981;
+  --emerald-light: rgba(16, 185, 129, 0.16);
+  --emerald-border: rgba(52, 211, 153, 0.32);
+  
+  --amber: #f59e0b;
+  --amber-light: rgba(245, 158, 11, 0.16);
+  
+  --indigo: #6366f1;
+  --indigo-light: rgba(99, 102, 241, 0.16);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 12px 36px -4px rgba(0, 0, 0, 0.55), 0 4px 12px -2px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 20px 48px -8px rgba(0, 0, 0, 0.7), 0 6px 16px -3px rgba(0, 0, 0, 0.45);
+
+  /* Glass navigation variables */
+  --nav-bg: rgba(15, 23, 42, 0.88);
+  --nav-border: rgba(51, 65, 85, 0.75);
+  --dock-bg: rgba(15, 23, 42, 0.86);
+  --dock-border: rgba(255, 255, 255, 0.12);
+  --dock-active-bg: rgba(37, 99, 235, 0.24);
+  --dock-active-border: rgba(96, 165, 250, 0.4);
+  --specular-line: rgba(255, 255, 255, 0.18);
+  --dock-tab-color: #94a3b8;
+  --dock-tab-hover: #f8fafc;
 }
 
 *, *::before, *::after {
@@ -50,7 +109,7 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: light;
+  color-scheme: light dark;
 }
 
 body {
@@ -67,6 +126,16 @@ body {
     radial-gradient(at 50% 70%, rgba(14, 165, 233, 0.025) 0px, transparent 50%);
   background-attachment: fixed;
   padding-bottom: 5.5rem;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+[data-theme="dark"] body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
+    radial-gradient(at 85% 25%, rgba(99, 102, 241, 0.07) 0px, transparent 50%),
+    radial-gradient(at 50% 70%, rgba(14, 165, 233, 0.06) 0px, transparent 50%);
 }
 
 /* Custom Scrollbar */
@@ -84,9 +153,21 @@ body {
   background: #94a3b8;
 }
 
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
 ::selection {
   background: #dbeafe;
   color: #1e3a8a;
+}
+
+[data-theme="dark"] ::selection {
+  background: #1e3a8a;
+  color: #bfdbfe;
 }
 
 button {
@@ -121,10 +202,23 @@ code, pre {
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
 }
 
+[data-theme="dark"] .glossy-card {
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    var(--shadow-md);
+}
+
 .glossy-card:hover {
   border-color: rgba(191, 219, 254, 0.9);
   box-shadow: 
     inset 0 1px 0 rgba(255, 255, 255, 1),
+    var(--shadow-xl);
+}
+
+[data-theme="dark"] .glossy-card:hover {
+  border-color: rgba(96, 165, 250, 0.5);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
     var(--shadow-xl);
 }
 
@@ -150,6 +244,17 @@ code, pre {
   z-index: 2;
 }
 
+[data-theme="dark"] .glossy-card::before {
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0) 60%,
+    transparent 100%
+  );
+}
+
 .glossy-card:hover::before {
   left: 200%;
 }
@@ -167,6 +272,13 @@ code, pre {
   backdrop-filter: blur(10px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), var(--shadow-sm);
   color: var(--text-muted);
+}
+
+[data-theme="dark"] .glossy-pill {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: var(--border-light);
+  color: var(--text-muted);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), var(--shadow-sm);
 }
 
 @media (max-width: 768px) {

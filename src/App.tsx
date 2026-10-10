@@ -1,4 +1,5 @@
 import './styles/global.css';
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import TelemetryWidget from './components/TelemetryWidget/TelemetryWidget';
@@ -15,22 +16,24 @@ import FloatingMobileBar from './components/FloatingMobileBar/FloatingMobileBar'
 
 export default function App() {
   return (
-    <div className="portfolio-app">
-      <Navbar />
-      <main>
-        <Hero />
-        <TelemetryWidget />
-        <About />
-        <Projects />
-        <Experience />
-        <Skills />
-        <Certificates />
-        <Achievements />
-        <Education />
-        <Contact />
-      </main>
-      <Footer />
-      <FloatingMobileBar />
-    </div>
+    <ThemeProvider>
+      <div className="portfolio-app">
+        <Navbar />
+        <main>
+          <Hero />
+          <TelemetryWidget />
+          <About />
+          <Projects />
+          <Experience />
+          <Skills />
+          <Certificates />
+          <Achievements />
+          <Education />
+          <Contact />
+        </main>
+        <Footer />
+        <FloatingMobileBar />
+      </div>
+    </ThemeProvider>
   );
 }

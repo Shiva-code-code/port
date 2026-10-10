@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download, Menu, X, ArrowUpRight } from 'lucide-react';
 import { resume } from '../../data/resume';
+import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import styles from './Navbar.module.css';
 
 const navItems = [
@@ -62,7 +63,7 @@ export default function Navbar() {
 
   return (
     <motion.header
-      className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}
+      className={`${styles.header} ${scrolled ? styles.headerHidden : ''}`}
       initial={{ y: 0, opacity: 1 }}
       animate={{
         y: scrolled ? -100 : 0,
@@ -116,7 +117,7 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Right CTA / Resume */}
+        {/* Right CTA / Theme / Resume */}
         <div className={styles.navActions}>
           <a
             href={resume.resumePdf}
@@ -128,6 +129,9 @@ export default function Navbar() {
             <Download size={14} />
             <span>Resume</span>
           </a>
+
+          {/* Theme Switcher Toggle */}
+          <ThemeToggle />
 
           <button
             className={styles.contactBtn}
@@ -169,6 +173,10 @@ export default function Navbar() {
                 </button>
               ))}
               <div className={styles.mobileActions}>
+                <div className={styles.mobileThemeRow}>
+                  <span className={styles.mobileThemeLabel}>Appearance</span>
+                  <ThemeToggle />
+                </div>
                 <a
                   href={resume.resumePdf}
                   target="_blank"

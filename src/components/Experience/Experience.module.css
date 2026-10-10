@@ -1,9 +1,10 @@
 .experienceSection {
   padding: 6.5rem 1.5rem;
-  background-color: white;
+  background-color: var(--bg-card-solid);
   border-top: 1px solid var(--border-light);
   border-bottom: 1px solid var(--border-light);
   position: relative;
+  transition: background-color 0.25s, border-color 0.25s;
 }
 
 .container {
@@ -55,17 +56,17 @@
 }
 
 .timelineCard {
-  background: #f8fafc;
+  background: var(--bg-subtle);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-xl);
   padding: 2.25rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), var(--shadow-sm);
+  box-shadow: inset 0 1px 0 var(--specular-line), var(--shadow-sm);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .timelineCard:hover {
-  background: white;
-  border-color: #bfdbfe;
+  background: var(--bg-card-solid);
+  border-color: var(--primary-border);
   box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
 }
@@ -89,7 +90,7 @@
   width: 48px;
   height: 48px;
   border-radius: var(--radius-md);
-  background: white;
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-light);
   display: flex;
   align-items: center;
@@ -175,7 +176,7 @@
   font-weight: 600;
   padding: 0.25rem 0.65rem;
   border-radius: 6px;
-  background: white;
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-light);
   color: var(--text-muted);
 }

@@ -64,10 +64,10 @@
   font-weight: 600;
   color: var(--text-dim);
   border-radius: 9999px;
-  background: white;
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-light);
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
-  transition: color 0.2s;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
   z-index: 1;
 }
 
@@ -76,8 +76,8 @@
 }
 
 .filterBtnActive {
-  color: #1d4ed8;
-  border-color: #bfdbfe;
+  color: var(--primary);
+  border-color: var(--primary-border);
 }
 
 .filterCount {
@@ -85,15 +85,15 @@
   font-family: 'JetBrains Mono', monospace;
   padding: 0.1rem 0.4rem;
   border-radius: 9999px;
-  background: #f1f5f9;
+  background: var(--bg-subtle);
   color: var(--text-dim);
 }
 
 .filterActiveBackground {
   position: absolute;
   inset: 0;
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
+  background: var(--primary-light);
+  border: 1px solid var(--primary-border);
   border-radius: 9999px;
   z-index: -1;
 }
@@ -106,12 +106,12 @@
 }
 
 .projectCard {
-  background: white;
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-xl);
   padding: 2rem;
   box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 1px 0 var(--specular-line),
     var(--shadow-sm);
   display: flex;
   flex-direction: column;
@@ -120,14 +120,14 @@
 }
 
 .projectCard:hover {
-  border-color: #bfdbfe;
+  border-color: var(--primary-border);
   box-shadow: var(--shadow-lg);
   transform: translateY(-3px);
 }
 
 .featuredCard {
-  border-color: #cbd5e1;
-  background: linear-gradient(to bottom, #ffffff, #fafafa);
+  border-color: var(--primary-border);
+  background: var(--bg-card-solid);
 }
 
 .cardHeader {
@@ -309,7 +309,7 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.75rem;
-  background: white;
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
   font-size: 0.78rem;
@@ -320,9 +320,9 @@
 }
 
 .projectLinkBtn:hover {
-  background: #f8fafc;
+  background: var(--bg-subtle);
   color: var(--text-main);
-  border-color: #cbd5e1;
+  border-color: var(--border-focus);
 }
 
 @media (max-width: 900px) {

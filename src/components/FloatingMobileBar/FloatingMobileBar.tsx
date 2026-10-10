@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Home, User, Briefcase, Cpu, MessageSquare, Download } from 'lucide-react';
 import { resume } from '../../data/resume';
+import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import styles from './FloatingMobileBar.module.css';
 
 interface NavItem {
@@ -136,8 +137,11 @@ export default function FloatingMobileBar() {
           );
         })}
 
+        {/* Theme Toggle & Quick Actions */}
+        <div className={styles.dockDivider} />
+        <ThemeToggle className={styles.dockThemeBtn} size={15} />
+
         {/* Desktop-only quick Resume download button */}
-        <div className={styles.desktopDivider} />
         <a
           href={resume.resumePdf}
           target="_blank"

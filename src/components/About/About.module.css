@@ -1,9 +1,10 @@
 .aboutSection {
   padding: 6.5rem 1.5rem;
-  background-color: white;
+  background-color: var(--bg-card-solid);
   border-top: 1px solid var(--border-light);
   border-bottom: 1px solid var(--border-light);
   position: relative;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .container {
@@ -56,11 +57,12 @@
 
 /* Story Card */
 .storyCard {
-  background: #f8fafc;
+  background: var(--bg-subtle);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-xl);
   padding: 2.5rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), var(--shadow-sm);
+  box-shadow: inset 0 1px 0 var(--specular-line), var(--shadow-sm);
+  transition: background 0.25s, border-color 0.25s;
 }
 
 .storyHeadline {
@@ -90,9 +92,10 @@
   gap: 0.75rem;
   margin: 1.75rem 0;
   padding: 1.25rem;
-  background: white;
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
+  transition: background 0.25s, border-color 0.25s;
 }
 
 .principleItem {
@@ -166,18 +169,18 @@
 }
 
 .pillarCard {
-  background: white;
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
   padding: 1.6rem;
   box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 1px 0 var(--specular-line),
     var(--shadow-sm);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pillarCard:hover {
-  border-color: #bfdbfe;
+  border-color: var(--primary-border);
   box-shadow: var(--shadow-md);
 }
 
@@ -195,7 +198,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8fafc;
+  background: var(--bg-subtle);
   border: 1px solid var(--border-light);
   flex-shrink: 0;
 }
@@ -224,11 +227,16 @@
 
 /* Google Spotlight Card */
 .googleSpotlightCard {
-  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
-  border: 1px solid #bfdbfe;
+  background: linear-gradient(135deg, rgba(239, 246, 255, 0.9) 0%, rgba(240, 253, 244, 0.9) 100%);
+  border: 1px solid var(--primary-border);
   border-radius: var(--radius-lg);
   padding: 1.6rem;
   box-shadow: var(--shadow-sm);
+}
+
+:global([data-theme="dark"]) .googleSpotlightCard {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.25) 0%, rgba(6, 78, 59, 0.25) 100%);
+  border-color: rgba(96, 165, 250, 0.3);
 }
 
 .spotlightTop {
@@ -241,7 +249,7 @@
 .spotlightTag {
   font-size: 0.72rem;
   font-weight: 700;
-  color: #1e40af;
+  color: var(--primary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -250,8 +258,9 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   font-weight: 600;
-  color: #047857;
-  background: rgba(255, 255, 255, 0.8);
+  color: var(--emerald);
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border-light);
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
 }
@@ -259,13 +268,13 @@
 .spotlightTitle {
   font-size: 0.98rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-main);
   margin-bottom: 0.45rem;
 }
 
 .spotlightText {
   font-size: 0.84rem;
-  color: #334155;
+  color: var(--text-muted);
   line-height: 1.6;
 }
 

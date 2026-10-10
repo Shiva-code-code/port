@@ -28,11 +28,12 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 0.95rem;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
   border-radius: 9999px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 2px 8px rgba(15, 23, 42, 0.04);
+  box-shadow: inset 0 1px 0 var(--specular-line), var(--shadow-sm);
   width: fit-content;
+  transition: background 0.25s, border-color 0.25s;
 }
 
 .pulseDot {
@@ -52,7 +53,7 @@
 .availabilityText {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--text-main);
   letter-spacing: -0.01em;
 }
 
@@ -87,11 +88,11 @@
 }
 
 .dynamicTitle {
-  color: #1e3a8a;
+  color: var(--primary);
   font-weight: 700;
   padding: 0.2rem 0.65rem;
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
+  background: var(--primary-light);
+  border: 1px solid var(--primary-border);
   border-radius: 6px;
   font-size: 0.95em;
 }
@@ -114,7 +115,7 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.75rem;
-  background: white;
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
   font-size: 0.78rem;
@@ -160,7 +161,7 @@
   align-items: center;
   gap: 0.45rem;
   padding: 0.75rem 1.4rem;
-  background: white;
+  background: var(--bg-card-solid);
   color: var(--text-main);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
@@ -172,7 +173,7 @@
 
 .secondaryBtn:hover {
   background: var(--bg-subtle);
-  border-color: #cbd5e1;
+  border-color: var(--border-focus);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -226,7 +227,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
   color: var(--text-muted);
@@ -235,8 +236,8 @@
 }
 
 .socialBtn:hover {
-  background: #eff6ff;
-  border-color: #bfdbfe;
+  background: var(--primary-light);
+  border-color: var(--primary-border);
   color: var(--primary);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
@@ -267,13 +268,14 @@
   width: 100%;
   height: 100%;
   border-radius: var(--radius-xl);
-  background: white;
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-light);
   padding: 0.65rem;
   box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 24px 60px -12px rgba(15, 23, 42, 0.12);
+    inset 0 1px 0 var(--specular-line),
+    0 24px 60px -12px rgba(0, 0, 0, 0.25);
   overflow: hidden;
+  transition: background 0.25s, border-color 0.25s;
 }
 
 .photoImg {
@@ -290,15 +292,15 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--bg-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(226, 232, 240, 0.95);
+  border: 1px solid var(--border-light);
   padding: 0.65rem 0.95rem;
   border-radius: var(--radius-md);
   box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 12px 30px -4px rgba(15, 23, 42, 0.08);
+    inset 0 1px 0 var(--specular-line),
+    0 12px 30px -4px rgba(0, 0, 0, 0.15);
   z-index: 10;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -320,14 +322,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8fafc;
+  background: var(--bg-subtle);
   border: 1px solid var(--border-light);
   flex-shrink: 0;
 }
 
 .iotIconBadge {
-  background: #eff6ff;
-  border-color: #bfdbfe;
+  background: var(--primary-light);
+  border-color: var(--primary-border);
   color: var(--primary);
 }
 
@@ -356,18 +358,18 @@
 }
 
 .metricCard {
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
   padding: 1.4rem 1.25rem;
   backdrop-filter: blur(10px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), var(--shadow-sm);
+  box-shadow: inset 0 1px 0 var(--specular-line), var(--shadow-sm);
   transition: all 0.25s ease;
 }
 
 .metricCard:hover {
   transform: translateY(-3px);
-  border-color: #bfdbfe;
+  border-color: var(--primary-border);
   box-shadow: var(--shadow-md);
 }
 

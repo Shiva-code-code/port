@@ -9,10 +9,21 @@
     <meta name="author" content="Shiva Kumar Hazari" />
     <meta name="theme-color" content="#ffffff" />
     <title>Shiva Kumar Hazari | Field IoT & Edge Systems Engineer</title>
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('portfolio-theme');
+          var pref = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = saved || (pref ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+          if (theme === 'dark') document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <link rel="stylesheet" crossorigin href="./assets/index-WQ5qGn4P.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-Ct9jbODG.css">
     <script type="module" src="./src/main.tsx"></script>
     <script>
       window.addEventListener('error', function(e) {
@@ -20,7 +31,7 @@
           var s = document.createElement('script');
           s.type = 'module';
           s.crossOrigin = 'anonymous';
-          s.src = './assets/index-KglnUi98.js';
+          s.src = './assets/index-D0iKmIT7.js';
           document.body.appendChild(s);
         }
       }, true);
