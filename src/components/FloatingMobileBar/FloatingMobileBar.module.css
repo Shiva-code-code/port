@@ -1,0 +1,140 @@
+.barContainer {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .barContainer {
+    display: block;
+    position: fixed;
+    bottom: calc(0.95rem + env(safe-area-inset-bottom, 0px));
+    left: 0;
+    right: 0;
+    z-index: 995;
+    pointer-events: none;
+    padding: 0 1rem;
+  }
+
+  .floatingBar {
+    pointer-events: auto;
+    margin: 0 auto;
+    max-width: 380px;
+    height: 62px;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 9999px;
+    box-shadow: 
+      0 16px 36px -6px rgba(15, 23, 42, 0.12),
+      0 4px 12px -2px rgba(15, 23, 42, 0.05),
+      inset 0 1px 1.5px rgba(255, 255, 255, 1);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0.35rem 0.5rem;
+    position: relative;
+  }
+
+  /* Specular top light curve */
+  .floatingBar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 1) 50%,
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  .tabBtn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex: 1;
+    height: 100%;
+    border-radius: 9999px;
+    background: transparent;
+    color: #64748b;
+    transition: color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    z-index: 1;
+    padding: 0.25rem 0;
+  }
+
+  .tabBtn:hover {
+    color: #0f172a;
+  }
+
+  .activeTab {
+    color: #2563eb !important;
+    font-weight: 700;
+  }
+
+  .activePill {
+    position: absolute;
+    inset: 4px;
+    background: rgba(239, 246, 255, 0.9);
+    border: 1px solid rgba(191, 219, 254, 0.9);
+    border-radius: 9999px;
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 2px 8px rgba(37, 99, 235, 0.08);
+    z-index: -1;
+  }
+
+  .iconWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+  }
+
+  .tabIcon {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  }
+
+  .activeTab .tabIcon {
+    transform: translateY(-1px);
+    color: #2563eb;
+  }
+
+  .activeDot {
+    position: absolute;
+    bottom: -3px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #2563eb;
+  }
+
+  .tabLabel {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+}
+
+@media (max-width: 400px) {
+  .floatingBar {
+    max-width: 95%;
+    height: 58px;
+    padding: 0.25rem 0.35rem;
+  }
+
+  .tabLabel {
+    font-size: 0.64rem;
+  }
+}

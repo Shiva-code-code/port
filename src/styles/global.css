@@ -167,3 +167,9 @@ code, pre {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), var(--shadow-sm);
   color: var(--text-muted);
 }
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 5.25rem;
+  }
+}

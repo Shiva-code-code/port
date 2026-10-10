@@ -11,6 +11,7 @@ import Achievements from './components/Achievements/Achievements';
 import Education from './components/Education/Education';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
+import FloatingMobileBar from './components/FloatingMobileBar/FloatingMobileBar';
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <FloatingMobileBar />
     </div>
   );
 }
