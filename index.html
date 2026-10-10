@@ -12,6 +12,18 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-B6rXCxCh.css">
+    <script type="module" src="./src/main.tsx"></script>
+    <script>
+      window.addEventListener('error', function(e) {
+        if (e.target && e.target.src && e.target.src.includes('main.tsx')) {
+          var s = document.createElement('script');
+          s.type = 'module';
+          s.crossOrigin = 'anonymous';
+          s.src = './assets/index-DrfyAbA0.js';
+          document.body.appendChild(s);
+        }
+      }, true);
+    </script>
   </body>
 </html>
