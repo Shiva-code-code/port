@@ -17,28 +17,17 @@ const navItems = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [isMobile, setIsMobile] = useState(() =>
-    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
-  );
   const [activeSection, setActiveSection] = useState('hero');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-
     const handleScroll = () => {
-      const isMobileView = window.innerWidth <= 768;
-      // On mobile: morph into curved floating glossy capsule past 25px (never hides)
-      // On desktop: disappear smoothly past 80px (letting bottom dock appear)
+      // Trigger floating rounded pill mode past 25px scroll
       const currentScroll = window.scrollY;
-      const isPastThreshold = currentScroll > (isMobileView ? 25 : 80);
+      const isPastThreshold = currentScroll > 25;
       setScrolled(isPastThreshold);
 
-      if (isPastThreshold && mobileMenuOpen && !isMobileView) {
+      if (isPastThreshold && mobileMenuOpen) {
         setMobileMenuOpen(false);
       }
 
@@ -57,10 +46,7 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [mobileMenuOpen]);
 
   const scrollTo = (id: string) => {
@@ -76,25 +62,8 @@ export default function Navbar() {
   };
 
   return (
-    <motion.header
-      className={`
-        ${styles.header}
-        ${scrolled ? styles.scrolled : ''}
-        ${(!isMobile && scrolled) ? styles.headerHidden : ''}
-        ${(isMobile && scrolled) ? styles.mobileFloating : ''}
-      `}
-      initial={{ y: 0, opacity: 1 }}
-      animate={{
-        y: (!isMobile && scrolled) ? -100 : 0,
-        opacity: (!isMobile && scrolled) ? 0 : 1,
-      }}
-      transition={{
-        duration: 0.35,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      style={{
-        pointerEvents: (!isMobile && scrolled) ? 'none' : 'auto',
-      }}
+    <header
+      className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}
     >
       <div className={styles.container}>
         {/* Brand / Logo */}
@@ -215,6 +184,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }

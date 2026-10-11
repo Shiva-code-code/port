@@ -21,7 +21,6 @@ const navTabs: NavItem[] = [
 
 export default function FloatingMobileBar() {
   const [activeTab, setActiveTab] = useState('hero');
-  const [scrolled, setScrolled] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [isReading, setIsReading] = useState(false);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -45,10 +44,6 @@ export default function FloatingMobileBar() {
     };
 
     const handleScroll = () => {
-      // Threshold for desktop scroll behavior: 80px
-      const isPastTop = window.scrollY > 80;
-      setScrolled(isPastTop);
-
       resetIdleTimer();
 
       // Section spy mapping
@@ -118,9 +113,9 @@ export default function FloatingMobileBar() {
     }
   };
 
-  // On desktop: appears when scrolled down (> 80px), hidden at complete top, tucks away when reading
-  // On mobile: immediately visible on open, reappears whenever scrolling/touching, disappears when reading
-  const isVisible = (!isDesktop || scrolled) && !isReading;
+  // On desktop: top bar floats with full navigation; dock stays tucked so screen is clean and uncluttered
+  // On mobile: dock appears immediately, reappears on touch/scroll, glides away when reading with slow iPhone spring
+  const isVisible = !isDesktop && !isReading;
 
   return (
     <div className={styles.barContainer}>
