@@ -436,15 +436,15 @@
   }
 
   .contactBtn {
-    padding: 0.42rem 0.8rem;
-    font-size: 0.78rem;
-    gap: 0.25rem;
+    padding: 0.45rem 0.95rem;
+    font-size: 0.82rem;
+    gap: 0.35rem;
+    border-radius: 9999px;
   }
 
+  /* Remove hamburger menu button on mobile — navigation is handled by the bottom floating dock */
   .menuTrigger {
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
+    display: none !important;
   }
 }
 
