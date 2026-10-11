@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Home, User, Briefcase, Cpu, MessageSquare, Download } from 'lucide-react';
 import { resume } from '../../data/resume';
@@ -23,6 +23,8 @@ export default function FloatingMobileBar() {
   const [activeTab, setActiveTab] = useState('hero');
   const [scrolled, setScrolled] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isReading, setIsReading] = useState(false);
+  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const checkDesktop = () => {
@@ -31,10 +33,23 @@ export default function FloatingMobileBar() {
     checkDesktop();
     window.addEventListener('resize', checkDesktop);
 
+    const resetIdleTimer = () => {
+      setIsReading(false);
+      if (idleTimerRef.current) {
+        clearTimeout(idleTimerRef.current);
+      }
+      // When user is paused/stuck reading for 2.2s without scroll/touch, disappear bottom bar
+      idleTimerRef.current = setTimeout(() => {
+        setIsReading(true);
+      }, 2200);
+    };
+
     const handleScroll = () => {
       // Threshold for desktop scroll behavior: 80px
       const isPastTop = window.scrollY > 80;
       setScrolled(isPastTop);
+
+      resetIdleTimer();
 
       // Section spy mapping
       const scrollPos = window.scrollY + 200;
@@ -62,16 +77,36 @@ export default function FloatingMobileBar() {
       }
     };
 
+    const handleTouchOrActivity = () => {
+      resetIdleTimer();
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('touchstart', handleTouchOrActivity, { passive: true });
+    window.addEventListener('touchmove', handleTouchOrActivity, { passive: true });
     handleScroll();
 
+    // On initial load: bottom bar appears immediately, then idle timer engages after 3.2s
+    idleTimerRef.current = setTimeout(() => {
+      setIsReading(true);
+    }, 3200);
+
     return () => {
+      if (idleTimerRef.current) {
+        clearTimeout(idleTimerRef.current);
+      }
       window.removeEventListener('resize', checkDesktop);
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('touchstart', handleTouchOrActivity);
+      window.removeEventListener('touchmove', handleTouchOrActivity);
     };
   }, []);
 
   const scrollTo = (id: string) => {
+    setIsReading(false);
+    if (idleTimerRef.current) {
+      clearTimeout(idleTimerRef.current);
+    }
     setActiveTab(id);
     if (id === 'hero') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -83,9 +118,9 @@ export default function FloatingMobileBar() {
     }
   };
 
-  // On desktop screen: appears when scrolling down, disappears when at the complete top (scrollY <= 80px)
-  // On mobile screen: remains visible as the floating bottom bar
-  const isVisible = !isDesktop || scrolled;
+  // On desktop: appears when scrolled down (> 80px), hidden at complete top, tucks away when reading
+  // On mobile: immediately visible on open, reappears whenever scrolling/touching, disappears when reading
+  const isVisible = (!isDesktop || scrolled) && !isReading;
 
   return (
     <div className={styles.barContainer}>
@@ -93,6 +128,8 @@ export default function FloatingMobileBar() {
         className={styles.floatingBar}
         aria-label="Floating Navigation Bar"
         initial={false}
+        onPointerDown={() => setIsReading(false)}
+        onTouchStart={() => setIsReading(false)}
         animate={{
           y: isVisible ? 0 : 90,
           opacity: isVisible ? 1 : 0,
