@@ -32,11 +32,10 @@ export default function Navbar() {
 
     const handleScroll = () => {
       const isMobileView = window.innerWidth <= 768;
-      // On mobile: navbar disappears at the top, and appears as a floating glossy pill when scrolled past 40px
-      // On desktop: navbar is visible at the top, and disappears past 80px (revealing the floating dock)
+      // On mobile: morph into curved floating glossy capsule past 25px (never hides)
+      // On desktop: disappear smoothly past 80px (letting bottom dock appear)
       const currentScroll = window.scrollY;
-      const threshold = isMobileView ? 40 : 80;
-      const isPastThreshold = currentScroll > threshold;
+      const isPastThreshold = currentScroll > (isMobileView ? 25 : 80);
       setScrolled(isPastThreshold);
 
       if (isPastThreshold && mobileMenuOpen && !isMobileView) {
@@ -76,29 +75,25 @@ export default function Navbar() {
     }
   };
 
-  // On mobile: top navbar is hidden at top, appears when scrolled down
-  // On desktop: top navbar is visible at top, hidden when scrolled down
-  const showNavbar = isMobile ? scrolled : !scrolled;
-
   return (
     <motion.header
       className={`
         ${styles.header}
         ${scrolled ? styles.scrolled : ''}
-        ${!showNavbar ? styles.headerHidden : ''}
+        ${(!isMobile && scrolled) ? styles.headerHidden : ''}
         ${(isMobile && scrolled) ? styles.mobileFloating : ''}
       `}
-      initial={false}
+      initial={{ y: 0, opacity: 1 }}
       animate={{
-        y: showNavbar ? 0 : -100,
-        opacity: showNavbar ? 1 : 0,
+        y: (!isMobile && scrolled) ? -100 : 0,
+        opacity: (!isMobile && scrolled) ? 0 : 1,
       }}
       transition={{
         duration: 0.35,
         ease: [0.16, 1, 0.3, 1],
       }}
       style={{
-        pointerEvents: showNavbar ? 'auto' : 'none',
+        pointerEvents: (!isMobile && scrolled) ? 'none' : 'auto',
       }}
     >
       <div className={styles.container}>

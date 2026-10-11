@@ -38,10 +38,10 @@ export default function FloatingMobileBar() {
       if (idleTimerRef.current) {
         clearTimeout(idleTimerRef.current);
       }
-      // When user is paused/stuck reading for 2.2s without scroll/touch, disappear bottom bar
+      // When user is paused reading for 2.8s without scroll/touch, smoothly glide bottom bar away
       idleTimerRef.current = setTimeout(() => {
         setIsReading(true);
-      }, 2200);
+      }, 2800);
     };
 
     const handleScroll = () => {
@@ -86,10 +86,10 @@ export default function FloatingMobileBar() {
     window.addEventListener('touchmove', handleTouchOrActivity, { passive: true });
     handleScroll();
 
-    // On initial load: bottom bar appears immediately, then idle timer engages after 3.2s
+    // On initial load: bottom bar appears immediately with iPhone spring, then idle timer engages after 3.8s
     idleTimerRef.current = setTimeout(() => {
       setIsReading(true);
-    }, 3200);
+    }, 3800);
 
     return () => {
       if (idleTimerRef.current) {
@@ -131,14 +131,16 @@ export default function FloatingMobileBar() {
         onPointerDown={() => setIsReading(false)}
         onTouchStart={() => setIsReading(false)}
         animate={{
-          y: isVisible ? 0 : 90,
+          y: isVisible ? 0 : 88,
           opacity: isVisible ? 1 : 0,
-          scale: isVisible ? 1 : 0.94,
+          scale: isVisible ? 1 : 0.89,
+          filter: isVisible ? 'blur(0px)' : 'blur(12px)',
         }}
         transition={{
           type: 'spring',
-          stiffness: 360,
-          damping: 30,
+          stiffness: 110, // Slow, fluid, floaty iPhone-grade spring
+          damping: 18,   // Cushioned settling without harsh bounce
+          mass: 1.25,    // Premium tactile weight
         }}
         style={{
           pointerEvents: isVisible ? 'auto' : 'none',
@@ -153,9 +155,9 @@ export default function FloatingMobileBar() {
               key={tab.id}
               onClick={() => scrollTo(tab.id)}
               className={`${styles.tabBtn} ${isActive ? styles.activeTab : ''}`}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.92 }}
-              transition={{ type: 'spring', stiffness: 450, damping: 20 }}
+              whileHover={{ y: -2, scale: 1.04 }}
+              whileTap={{ scale: 0.88 }}
+              transition={{ type: 'spring', stiffness: 280, damping: 20 }}
               aria-label={tab.label}
               type="button"
             >
@@ -163,13 +165,42 @@ export default function FloatingMobileBar() {
                 <motion.div
                   layoutId="dockActivePill"
                   className={styles.activePill}
-                  transition={{ type: 'spring', stiffness: 450, damping: 32 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 175, // Smooth liquid Apple pill glide across tabs
+                    damping: 23,
+                    mass: 1.1,
+                  }}
                 />
               )}
 
               <div className={styles.iconWrapper}>
-                <Icon size={19} className={styles.tabIcon} />
-                {isActive && <span className={styles.activeDot} />}
+                <motion.div
+                  animate={{
+                    scale: isActive ? 1.08 : 1,
+                    y: isActive ? -1 : 0,
+                  }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 220,
+                    damping: 20,
+                  }}
+                >
+                  <Icon size={19} className={styles.tabIcon} />
+                </motion.div>
+                {isActive && (
+                  <motion.span
+                    className={styles.activeDot}
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 300,
+                      damping: 18,
+                      delay: 0.05,
+                    }}
+                  />
+                )}
               </div>
               <span className={styles.tabLabel}>{tab.label}</span>
             </motion.button>
@@ -189,8 +220,8 @@ export default function FloatingMobileBar() {
           download="SHIVA_KUMAR_HAZARI_RESUME.pdf"
           title="Download Resume (PDF)"
           whileHover={{ scale: 1.04, y: -1 }}
-          whileTap={{ scale: 0.96 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+          whileTap={{ scale: 0.94 }}
+          transition={{ type: 'spring', stiffness: 280, damping: 20 }}
         >
           <Download size={14} />
           <span>Resume</span>
