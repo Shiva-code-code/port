@@ -24,6 +24,8 @@ export default function FloatingMobileBar() {
   const [isDesktop, setIsDesktop] = useState(false);
   const [isReading, setIsReading] = useState(false);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isProgrammaticScrollRef = useRef(false);
+  const scrollLockTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const checkDesktop = () => {
@@ -46,9 +48,39 @@ export default function FloatingMobileBar() {
     const handleScroll = () => {
       resetIdleTimer();
 
-      // Section spy mapping
-      const scrollPos = window.scrollY + 200;
-      const sectionOrder = ['hero', 'about', 'projects', 'experience', 'skills', 'certificates', 'achievements', 'education', 'contact'];
+      // Don't override active tab while programmatic smooth scroll is animating to destination
+      if (isProgrammaticScrollRef.current) {
+        return;
+      }
+
+      // If at the very top of the page -> Home
+      if (window.scrollY < 60) {
+        setActiveTab('hero');
+        return;
+      }
+
+      // If scrolled to bottom of page -> Contact
+      const isAtBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 80;
+      if (isAtBottom) {
+        setActiveTab('contact');
+        return;
+      }
+
+      // Section spy mapping in strict sequential order from top to bottom
+      const scrollPos = window.scrollY + Math.min(window.innerHeight * 0.35, 260);
+      const sectionOrder = [
+        'hero',
+        'about',
+        'projects',
+        'experience',
+        'skills',
+        'certificates',
+        'achievements',
+        'education',
+        'contact',
+      ];
       
       const tabMap: Record<string, string> = {
         hero: 'hero',
@@ -57,8 +89,8 @@ export default function FloatingMobileBar() {
         experience: 'projects',
         skills: 'skills',
         certificates: 'skills',
-        achievements: 'about',
-        education: 'about',
+        achievements: 'skills',
+        education: 'skills',
         contact: 'contact',
       };
 
@@ -73,15 +105,21 @@ export default function FloatingMobileBar() {
     };
 
     const handleTouchOrActivity = () => {
+      // If user physically touches or drags screen, release programmatic scroll lock immediately
+      isProgrammaticScrollRef.current = false;
+      if (scrollLockTimeoutRef.current) {
+        clearTimeout(scrollLockTimeoutRef.current);
+      }
       resetIdleTimer();
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('touchstart', handleTouchOrActivity, { passive: true });
     window.addEventListener('touchmove', handleTouchOrActivity, { passive: true });
+    window.addEventListener('wheel', handleTouchOrActivity, { passive: true });
     handleScroll();
 
-    // On initial load: bottom bar appears immediately with iPhone spring, then idle timer engages after 3.8s
+    // On initial load: bottom bar appears immediately, then idle timer engages after 3.8s
     idleTimerRef.current = setTimeout(() => {
       setIsReading(true);
     }, 3800);
@@ -90,10 +128,14 @@ export default function FloatingMobileBar() {
       if (idleTimerRef.current) {
         clearTimeout(idleTimerRef.current);
       }
+      if (scrollLockTimeoutRef.current) {
+        clearTimeout(scrollLockTimeoutRef.current);
+      }
       window.removeEventListener('resize', checkDesktop);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('touchstart', handleTouchOrActivity);
       window.removeEventListener('touchmove', handleTouchOrActivity);
+      window.removeEventListener('wheel', handleTouchOrActivity);
     };
   }, []);
 
@@ -102,7 +144,19 @@ export default function FloatingMobileBar() {
     if (idleTimerRef.current) {
       clearTimeout(idleTimerRef.current);
     }
+
+    // Set destination tab immediately for instant, responsive tactile feedback
     setActiveTab(id);
+
+    // Lock scroll-spying during smooth-scroll so intermediate sections don't cause jitter
+    isProgrammaticScrollRef.current = true;
+    if (scrollLockTimeoutRef.current) {
+      clearTimeout(scrollLockTimeoutRef.current);
+    }
+    scrollLockTimeoutRef.current = setTimeout(() => {
+      isProgrammaticScrollRef.current = false;
+    }, 750);
+
     if (id === 'hero') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
@@ -151,8 +205,8 @@ export default function FloatingMobileBar() {
               onClick={() => scrollTo(tab.id)}
               className={`${styles.tabBtn} ${isActive ? styles.activeTab : ''}`}
               whileHover={{ y: -2, scale: 1.04 }}
-              whileTap={{ scale: 0.88 }}
-              transition={{ type: 'spring', stiffness: 280, damping: 20 }}
+              whileTap={{ scale: 0.92 }}
+              transition={{ type: 'spring', stiffness: 350, damping: 25 }}
               aria-label={tab.label}
               type="button"
             >
@@ -163,9 +217,8 @@ export default function FloatingMobileBar() {
                   style={{ borderRadius: isDesktop ? 9999 : 14 }}
                   transition={{
                     type: 'spring',
-                    stiffness: 175, // Smooth liquid Apple pill glide across tabs
-                    damping: 23,
-                    mass: 1.1,
+                    stiffness: 380, // Crisp, snappy, predictable spring identical to desktop
+                    damping: 30,
                   }}
                 />
               )}
@@ -173,13 +226,12 @@ export default function FloatingMobileBar() {
               <div className={styles.iconWrapper}>
                 <motion.div
                   animate={{
-                    scale: isActive ? 1.06 : 1,
-                    y: isActive ? -1 : 0,
+                    scale: isActive ? 1.08 : 1,
                   }}
                   transition={{
                     type: 'spring',
-                    stiffness: 220,
-                    damping: 20,
+                    stiffness: 320,
+                    damping: 24,
                   }}
                 >
                   <Icon size={18} className={styles.tabIcon} />
