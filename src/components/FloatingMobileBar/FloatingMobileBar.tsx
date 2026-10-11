@@ -160,6 +160,7 @@ export default function FloatingMobileBar() {
                 <motion.div
                   layoutId="dockActivePill"
                   className={styles.activePill}
+                  style={{ borderRadius: isDesktop ? 9999 : 14 }}
                   transition={{
                     type: 'spring',
                     stiffness: 175, // Smooth liquid Apple pill glide across tabs
@@ -172,7 +173,7 @@ export default function FloatingMobileBar() {
               <div className={styles.iconWrapper}>
                 <motion.div
                   animate={{
-                    scale: isActive ? 1.08 : 1,
+                    scale: isActive ? 1.06 : 1,
                     y: isActive ? -1 : 0,
                   }}
                   transition={{
@@ -181,21 +182,8 @@ export default function FloatingMobileBar() {
                     damping: 20,
                   }}
                 >
-                  <Icon size={19} className={styles.tabIcon} />
+                  <Icon size={18} className={styles.tabIcon} />
                 </motion.div>
-                {isActive && (
-                  <motion.span
-                    className={styles.activeDot}
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{
-                      type: 'spring',
-                      stiffness: 300,
-                      damping: 18,
-                      delay: 0.05,
-                    }}
-                  />
-                )}
               </div>
               <span className={styles.tabLabel}>{tab.label}</span>
             </motion.button>

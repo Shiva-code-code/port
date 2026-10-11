@@ -98,12 +98,6 @@
   color: var(--primary);
 }
 
-.activeDot {
-  position: absolute;
-  border-radius: 50%;
-  background: var(--primary);
-}
-
 .tabLabel {
   line-height: 1;
   transition: color 0.2s ease;
@@ -188,33 +182,38 @@
   .floatingBar {
     max-width: 420px;
     width: 100%;
-    height: 62px;
+    height: 64px;
     justify-content: space-around;
     padding: 0.35rem 0.45rem;
   }
 
   .tabBtn {
     flex-direction: column;
-    gap: 2px;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
     flex: 1;
     height: 100%;
-    padding: 0.25rem 0;
+    padding: 0.35rem 0.2rem;
+    border-radius: 14px;
+  }
+
+  .activePill {
+    border-radius: 14px;
+    inset: 2px 2px;
   }
 
   .tabIcon {
-    width: 19px;
-    height: 19px;
-  }
-
-  .activeDot {
-    bottom: -3px;
-    width: 4px;
-    height: 4px;
+    width: 18px;
+    height: 18px;
   }
 
   .tabLabel {
     font-size: 0.68rem;
     font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
   }
 
   .dockDivider {
@@ -235,17 +234,29 @@
 @media (max-width: 400px) {
   .floatingBar {
     max-width: 98%;
-    height: 58px;
+    height: 60px;
     padding: 0.25rem 0.3rem;
   }
 
+  .tabBtn {
+    border-radius: 12px;
+    padding: 0.25rem 0.1rem;
+    gap: 2px;
+  }
+
+  .activePill {
+    border-radius: 12px;
+    inset: 2px 1px;
+  }
+
   .tabIcon {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
   }
 
   .tabLabel {
     font-size: 0.62rem;
+    line-height: 1;
   }
 
   .dockDivider {
