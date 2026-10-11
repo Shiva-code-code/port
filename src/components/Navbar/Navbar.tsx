@@ -17,23 +17,34 @@ const navItems = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
   const [activeSection, setActiveSection] = useState('hero');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // When scrolling down past 80px, the top navbar disappears smoothly
-      // When scrolling to the complete top (scrollY <= 80px), the top navbar reappears
-      const isPastTop = window.scrollY > 80;
-      setScrolled(isPastTop);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
 
-      if (isPastTop && mobileMenuOpen) {
+    const handleScroll = () => {
+      const isMobileView = window.innerWidth <= 768;
+      // On mobile: morph into curved floating glossy capsule past 25px
+      // On desktop: disappear smoothly past 80px (letting bottom dock appear)
+      const currentScroll = window.scrollY;
+      const isPastThreshold = currentScroll > (isMobileView ? 25 : 80);
+      setScrolled(isPastThreshold);
+
+      if (isPastThreshold && mobileMenuOpen && !isMobileView) {
         setMobileMenuOpen(false);
       }
 
       // Section spy
       const sections = ['hero', ...navItems.map(item => item.id)];
-      const scrollPos = window.scrollY + 120;
+      const scrollPos = currentScroll + 120;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i]);
@@ -46,7 +57,10 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [mobileMenuOpen]);
 
   const scrollTo = (id: string) => {
@@ -63,18 +77,23 @@ export default function Navbar() {
 
   return (
     <motion.header
-      className={`${styles.header} ${scrolled ? styles.headerHidden : ''}`}
+      className={`
+        ${styles.header}
+        ${scrolled ? styles.scrolled : ''}
+        ${(!isMobile && scrolled) ? styles.headerHidden : ''}
+        ${(isMobile && scrolled) ? styles.mobileFloating : ''}
+      `}
       initial={{ y: 0, opacity: 1 }}
       animate={{
-        y: scrolled ? -100 : 0,
-        opacity: scrolled ? 0 : 1,
+        y: (!isMobile && scrolled) ? -100 : 0,
+        opacity: (!isMobile && scrolled) ? 0 : 1,
       }}
       transition={{
         duration: 0.35,
         ease: [0.16, 1, 0.3, 1],
       }}
       style={{
-        pointerEvents: scrolled ? 'none' : 'auto',
+        pointerEvents: (!isMobile && scrolled) ? 'none' : 'auto',
       }}
     >
       <div className={styles.container}>
@@ -133,8 +152,10 @@ export default function Navbar() {
             <span>Resume</span>
           </motion.a>
 
-          {/* Theme Switcher Toggle */}
-          <ThemeToggle />
+          {/* Theme Switcher Toggle (Desktop only; on mobile, FloatingMobileBar has the theme toggle) */}
+          <div className={styles.topThemeWrapper}>
+            <ThemeToggle />
+          </div>
 
           <motion.button
             className={styles.contactBtn}
@@ -179,10 +200,6 @@ export default function Navbar() {
                 </button>
               ))}
               <div className={styles.mobileActions}>
-                <div className={styles.mobileThemeRow}>
-                  <span className={styles.mobileThemeLabel}>Appearance</span>
-                  <ThemeToggle />
-                </div>
                 <a
                   href={resume.resumePdf}
                   target="_blank"

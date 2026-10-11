@@ -182,6 +182,7 @@
 @media (max-width: 768px) {
   .barContainer {
     bottom: calc(0.95rem + env(safe-area-inset-bottom, 0px));
+    padding: 0 0.75rem;
   }
 
   .floatingBar {
@@ -189,7 +190,7 @@
     width: 100%;
     height: 62px;
     justify-content: space-around;
-    padding: 0.35rem 0.5rem;
+    padding: 0.35rem 0.45rem;
   }
 
   .tabBtn {
@@ -201,8 +202,8 @@
   }
 
   .tabIcon {
-    width: 20px;
-    height: 20px;
+    width: 19px;
+    height: 19px;
   }
 
   .activeDot {
@@ -216,6 +217,16 @@
     font-weight: 600;
   }
 
+  .dockDivider {
+    margin: 0 0.2rem;
+    height: 20px;
+  }
+
+  .dockThemeBtn {
+    width: 33px !important;
+    height: 33px !important;
+  }
+
   .dockResumeBtn {
     display: none;
   }
@@ -223,12 +234,27 @@
 
 @media (max-width: 400px) {
   .floatingBar {
-    max-width: 96%;
+    max-width: 98%;
     height: 58px;
-    padding: 0.25rem 0.35rem;
+    padding: 0.25rem 0.3rem;
+  }
+
+  .tabIcon {
+    width: 18px;
+    height: 18px;
   }
 
   .tabLabel {
-    font-size: 0.64rem;
+    font-size: 0.62rem;
+  }
+
+  .dockDivider {
+    margin: 0 0.1rem;
+    height: 18px;
+  }
+
+  .dockThemeBtn {
+    width: 30px !important;
+    height: 30px !important;
   }
 }
